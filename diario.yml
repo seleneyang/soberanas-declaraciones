@@ -1,0 +1,42 @@
+# Guardar en .github/workflows/diario.yml
+#
+# Corre todos los días y deja los candidatos en data/candidatos-FECHA.json.
+# No toca data/expedientes.json, que es el archivo que lee el sitio: ese se
+# actualiza cuando alguien revisa los candidatos, completa el recorte de prensa
+# y coloca el pin. La automatización encuentra, la edición decide.
+
+name: recolección diaria
+
+on:
+  schedule:
+    # 12:00 UTC son las 6:00 en Costa Rica
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  recolectar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests
+
+      - name: Recolectar declaraciones
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python recolector.py
+
+      - name: Guardar candidatos
+        run: |
+          git config user.name "recolector"
+          git config user.email "actions@github.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "candidatos $(date -u +%F)"
+          git push
