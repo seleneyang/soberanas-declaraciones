@@ -39,8 +39,7 @@ PROVINCIAS = [
 
 SPARQL = """
 SELECT DISTINCT ?p ?pLabel ?posLabel ?distLabel WHERE {
-  ?party wdt:P31/wdt:P279* wd:Q7278 ; rdfs:label "Pueblo Soberano"@es .
-  ?p wdt:P31 wd:Q5 ; wdt:P102 ?party .
+  ?p wdt:P31 wd:Q5 ; wdt:P102 wd:Q135553930 .
   OPTIONAL {
     ?p p:P39 ?st . ?st ps:P39 ?pos .
     FILTER NOT EXISTS { ?st pq:P582 ?fin }

@@ -459,7 +459,7 @@ const MUESTRA=[{
     outlet:"Diario de muestra", date:"2026-08-13", url:"",
     excerpt:"El expediente administrativo autoriza actividad extractiva en 1.400 hectáreas colindantes con el área protegida, según los documentos consultados.",
     key:"1.400 hectáreas colindantes con el área protegida"},
-  recorded:{lang:"es",title:"Áreas silvestres protegidas de Costa Rica",datum:"",datumLabel:""},
+  recorded:{lang:"es",title:"Parques nacionales de Costa Rica",datum:"",datumLabel:""},
   note:"Las tres piezas no se contradicen por sí solas: la declaración habla de bosque primario, el expediente habla de zona de amortiguamiento, y el artículo enciclopédico da la escala del sistema donde ocurren ambas cosas. La tensión está en el corrimiento de la categoría, y eso es lo que el expediente pone a la vista."
 }];
 
@@ -470,8 +470,7 @@ let files=[], roster=[], currentId=null;
    medida que Wikidata se completa. Lo que falte allá falta acá. */
 const SPARQL=`
 SELECT DISTINCT ?p ?pLabel ?posLabel ?distLabel ?img WHERE {
-  ?party wdt:P31/wdt:P279* wd:Q7278 ; rdfs:label "Pueblo Soberano"@es .
-  ?p wdt:P31 wd:Q5 ; wdt:P102 ?party .
+  ?p wdt:P31 wd:Q5 ; wdt:P102 wd:Q135553930 .
   OPTIONAL {
     ?p p:P39 ?st . ?st ps:P39 ?pos .
     FILTER NOT EXISTS { ?st pq:P582 ?fin }
